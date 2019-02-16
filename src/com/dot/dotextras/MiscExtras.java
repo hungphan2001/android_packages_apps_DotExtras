@@ -47,11 +47,15 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.settings.Utils;
 
 public class MiscExtras extends SettingsPreferenceFragment implements OnPreferenceChangeListener {
-
+private static final String KEY_DEVICE_PART = "advanced_controls";
+private static final String KEY_DEVICE_PART_PACKAGE_NAME = "com.thht.settings.device";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+/ Advanced Controls
+        if (!com.dot.dotextras.Utils.isPackageInstalled(getActivity(), KEY_DEVICE_PART_PACKAGE_NAME)) {
+            getPreferenceScreen().removePreference(findPreference(KEY_DEVICE_PART));
+        }
         addPreferencesFromResource(R.xml.misc_extras);
 
         final ContentResolver resolver = getActivity().getContentResolver();
